@@ -1,22 +1,18 @@
 from tkinter import *
 from employee import *
 from gui import *
+from db import *
 
-gui = startGui()
+db = DB()
 
 # create an employee manager and add the employees
-manager = EmployeeList()
-manager.add_employee(Employee("John", 30, 50000, "Software Developer"))
-manager.add_employee(Employee("Mary", 25, 45000, "Graphic Designer"))
-manager.add_employee(Employee("Bob", 40, 60000, "Project Manager"))
+manager = EmployeeList(db)
+manager.add_employee("John", "02-05-1985", 50000, "Software Developer")
+manager.add_employee("Mary", "7-23-1995", 45000, "Graphic Designer")
+manager.add_employee("Bob", "10-15-1988", 60000, "Project Manager")
 
 # list the employees
 manager.list_employees()
 
-#start = Button(gui, text="START", text="Add", command=gui.addRowDialog)
-#start.grid(row = 0, column=0, columnspan=1)
-
-add_row_button = tk.Button(gui, text="Add Row", command=lambda: insertRowDialog(gui).show())
-add_row_button.grid(row = 0, column=0, columnspan=1)
-
+gui = startGui(manager)
 gui.mainloop()
