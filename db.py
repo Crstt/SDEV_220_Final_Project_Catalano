@@ -16,7 +16,12 @@ class DB:
                                job_title TEXT)''')
         self.conn.commit()
 
-    def save(self, employee):
+    def get_all_employees(self):
+        self.cursor.execute('SELECT * FROM employees ORDER BY id')
+        rows = self.cursor.fetchall()
+        return rows
+    
+    def insert(self, employee):
         self.cursor.execute('''INSERT INTO employees
                                (id, name, birthdate, age, salary, job_title)
                                VALUES (?, ?, ?, ?, ?, ?)''',
