@@ -14,6 +14,6 @@ db = DB()
 # create an employee manager instance
 manager = EmployeeManager(db)
 # create a gui instance
-gui = startGui(manager)
+gui = StartGui(manager)
 #starts the gui main loop
 gui.mainloop()

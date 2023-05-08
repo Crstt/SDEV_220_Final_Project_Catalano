@@ -10,7 +10,7 @@ import tkinter.messagebox as messagebox
 # start gui class is the class that manages the entire gui
 # self will rappresent the root page
 # manager is the class where the employees are stored 
-class startGui(tk.Tk):
+class StartGui(tk.Tk):
     def __init__(self, manager):
         super().__init__()
 
@@ -34,7 +34,7 @@ class startGui(tk.Tk):
         heading.grid(row=0, column=0, columnspan=3)
 
         #creates the buttons for root
-        add_row_button = tk.Button(self, text="Add Employee", command=lambda: changeEmployeeTable(self).show())
+        add_row_button = tk.Button(self, text="Add Employee", command=lambda: ChangeEmployeeTable(self).show())
         edit_button = tk.Button(self, text="Edit Employee", command=lambda: self.editRow())
         remove_button = tk.Button(self, text="Remove Employee", command=lambda: self.removeRow())
 
@@ -127,7 +127,7 @@ class startGui(tk.Tk):
             tableItem = self.table.item(selected[0]) #gets selected employee
             employee_id = tableItem["values"][0]
             employee = self.manager.getEmployeeByID(employee_id) #this function is in the employeeManager class and is responsible for managing the editing of the employee
-            changeEmployeeTable(self, "edit", employee).show() # this line calls the class that manages the pop up window for editing and adding employees
+            ChangeEmployeeTable(self, "edit", employee).show() # this line calls the class that manages the pop up window for editing and adding employees
             self.table.item(employee_id, text=employee_id, values=(
                 employee.id, employee.name, employee.bDate, employee.age, employee.salary, employee.job_title))
         else:
@@ -166,7 +166,7 @@ class startGui(tk.Tk):
 # self is the pop up window
 # master is the root window
 # mode is the mode of the window (insert / edit)
-class changeEmployeeTable(tk.Toplevel):
+class ChangeEmployeeTable(tk.Toplevel):
     def __init__(self, master, mode="insert", employee=None):
         super().__init__(master)
         self.title("Add Row")
