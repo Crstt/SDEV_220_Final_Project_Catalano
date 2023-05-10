@@ -169,7 +169,7 @@ class StartGui(tk.Tk):
 class ChangeEmployeeTable(tk.Toplevel):
     def __init__(self, master, mode="insert", employee=None):
         super().__init__(master)
-        self.title("Add Row")
+        self.title(mode+" Employee")
         self.mode = mode
         self.employee = employee        
         self.configure(bg= master.bg)
@@ -198,7 +198,9 @@ class ChangeEmployeeTable(tk.Toplevel):
         # date must be valid date in the format Y-m-d 
         def validate_bDate(text):
             try:
-                datetime.strptime(text, '%Y-%m-%d')
+                bdate = datetime.strptime(text, '%Y-%m-%d')
+                if bdate >= datetime.today():
+                    raise ValueError('Birthdate is in the future.')
                 self.bDate_valid = True
                 bDate_label.config(fg='white')
             except ValueError:
@@ -245,7 +247,7 @@ class ChangeEmployeeTable(tk.Toplevel):
         #places the button on the popup window
         save_button.grid(row=4, column=1)
 
-        label_submit = tk.Label(self, text="When form is complete\ndeselect current textbox")
+        label_submit = tk.Label(self, text="When form is complete\npress Tab before submitting")
         label_submit.config(font=( "Arial", 8), fg="#999AA2", bg=master.bg)
         label_submit.grid(row=4, column=0)
 
@@ -258,7 +260,7 @@ class ChangeEmployeeTable(tk.Toplevel):
         name_label = tk.Label(self, text="Name:")
         name_label.config(font=( "Arial", 12), fg="white", bg=master.bg)
         name_label.grid(row=0, column=0)
-        name_entry = tk.Entry(self, textvariable=self.name, validate="key", validatecommand=name_validate_cmd) 
+        name_entry = tk.Entry(self, textvariable=self.name, validate="focusout", validatecommand=name_validate_cmd) 
         name_entry.grid(row=0, column=1)
 
         bDate_label = tk.Label(self, text="Birth Date (Y-m-d):")        
@@ -276,7 +278,7 @@ class ChangeEmployeeTable(tk.Toplevel):
         job_title_label = tk.Label(self, text="Job Title:")
         job_title_label.config(font=( "Arial", 12), fg="white", bg=master.bg)
         job_title_label.grid(row=3, column=0)
-        job_title_entry = tk.Entry(self, textvariable=self.job_title, validate="key", validatecommand=description_validate_cmd)
+        job_title_entry = tk.Entry(self, textvariable=self.job_title, validate="focusout", validatecommand=description_validate_cmd)
         job_title_entry.grid(row=3, column=1)
 
         # if the mode is edit the values of the current selected employee are populated in the field
